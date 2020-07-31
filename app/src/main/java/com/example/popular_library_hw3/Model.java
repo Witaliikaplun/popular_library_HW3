@@ -38,6 +38,7 @@ public class Model {
                         e.printStackTrace();
                     }
 
+                    viewModel.convertObservable();
                 }
 
 
@@ -53,7 +54,7 @@ public class Model {
             };
             Picasso.get().load(PATH).into(target);
 
-        }
-        viewModel.convertObservable();
+        } else viewModel.convertObservable();
+
     }
 }

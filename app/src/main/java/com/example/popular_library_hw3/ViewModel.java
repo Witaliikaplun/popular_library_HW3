@@ -59,7 +59,5 @@ public class ViewModel {
             }
         };
         observable.subscribe(observer);
-
     }
-
 }
