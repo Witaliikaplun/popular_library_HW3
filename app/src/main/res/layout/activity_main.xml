@@ -7,6 +7,11 @@
     tools:context=".MainActivity"
     android:orientation="vertical">
 
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="20dp"
+        android:text="исходное изображение"/>
+
     <ImageView
         android:id="@+id/iv1"
         android:layout_width="match_parent"
@@ -15,10 +20,14 @@
     <Button
         android:id="@+id/btn1"
         android:layout_width="130dp"
-        android:layout_height="30dp"
+        android:layout_height="35dp"
         android:layout_gravity="center"
-        android:layout_marginTop="20dp"
-        android:layout_marginBottom="20dp"/>
+        android:text="конвертация"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="результирующее изображение"/>
 
     <ImageView
         android:id="@+id/iv2"

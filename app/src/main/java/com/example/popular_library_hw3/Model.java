@@ -1,5 +1,6 @@
 package com.example.popular_library_hw3;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.drawable.Drawable;
 import com.squareup.picasso.Picasso;
 import com.squareup.picasso.Target;
@@ -37,8 +38,7 @@ public class Model {
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
-
-                    viewModel.convertObservable();
+                    viewModel.getLiveDatabitmap1().setValue(bitmap);
                 }
 
 
@@ -54,7 +54,9 @@ public class Model {
             };
             Picasso.get().load(PATH).into(target);
 
-        } else viewModel.convertObservable();
+        } else{
+            viewModel.getLiveDatabitmap1().setValue(BitmapFactory.decodeFile("/data/data/com.example.popular_library_hw3/img.jpg"));
+        }
 
     }
 }
