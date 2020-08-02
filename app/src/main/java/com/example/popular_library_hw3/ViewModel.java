@@ -17,10 +17,12 @@ import io.reactivex.schedulers.Schedulers;
 
 public class ViewModel extends androidx.lifecycle.ViewModel {
     public static final String PACH = "/data/data/com.example.popular_library_hw3/";
-    Model model;
-    Bitmap bitmap;
-    FileOutputStream fos;
-    File file;
+    private Model model;
+    private Bitmap bitmap;
+    private FileOutputStream fos;
+    private File file;
+    private boolean convertCancel;
+
 
     MutableLiveData<Bitmap> liveDatabitmap1 = new MutableLiveData<>();
     MutableLiveData<Bitmap> liveDatabitmap2 = new MutableLiveData<>();
@@ -28,6 +30,7 @@ public class ViewModel extends androidx.lifecycle.ViewModel {
     public ViewModel(){
         model = new Model(this);
         model.loadImage();
+        convertCancel = false;
     }
 
 
@@ -44,23 +47,28 @@ public class ViewModel extends androidx.lifecycle.ViewModel {
             @Override
             public void onNext(Bitmap bitmap) {
                 try {
-                    Thread.sleep(5000);
+                    Thread.sleep(10000);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
-                file = new File(PACH, "img.png");
-                try {
-                    fos = new FileOutputStream(file);
-                } catch (FileNotFoundException e) {
-                    e.printStackTrace();
+                if(!convertCancel){
+                    file = new File(PACH, "img.png");
+                    try {
+                        fos = new FileOutputStream(file);
+                    } catch (FileNotFoundException e) {
+                        e.printStackTrace();
+                    }
+                    bitmap.compress(Bitmap.CompressFormat.PNG, 100, fos);
+                    try {
+                        fos.close();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                    liveDatabitmap2.postValue(BitmapFactory.decodeFile("/data/data/com.example.popular_library_hw3/img.png"));
+                } else {
+                    Log.d("mylog", "отмена преобразования");
+                    convertCancel = false;
                 }
-                bitmap.compress(Bitmap.CompressFormat.PNG, 100, fos);
-                try {
-                    fos.close();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-                liveDatabitmap2.postValue(BitmapFactory.decodeFile("/data/data/com.example.popular_library_hw3/img.png"));
             }
 
             @Override
@@ -83,5 +91,11 @@ public class ViewModel extends androidx.lifecycle.ViewModel {
 
     public MutableLiveData<Bitmap> getLiveDatabitmap2() {
         return liveDatabitmap2;
+    }
+
+    public void setConvertCancel(boolean convertCancel) {
+        this.convertCancel = convertCancel;
+
+
     }
 }
